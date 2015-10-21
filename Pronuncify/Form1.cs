@@ -27,9 +27,8 @@ namespace Pronuncify
             Font font = new Font(this.labelWord.Font.FontFamily, 50);
             this.labelWord.Font = font; // default
             this.labelWord.Text = "[word here]";
-            //textLang.Text = Properties.Settings.Default.lang.ToString();
-            string s = Properties.Settings.Default.lang;
-            textLang.Text = s;
+            textLang.Text = Properties.Settings.Default.lang;
+            textSox.Text = Properties.Settings.Default.sox;
             textOutputFolder.Text = Properties.Settings.Default.outputFolder;
             textWordFile.Text = Properties.Settings.Default.wordFile;
             if (textWordFile.Text != "")
@@ -277,6 +276,11 @@ namespace Pronuncify
         {
             Properties.Settings.Default.lang = textLang.Text;
             Properties.Settings.Default.Save();
+        }
+
+        private void linkHomepage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://github.com/abartov/pronuncify.net");
         }
 
     }

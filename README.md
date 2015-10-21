@@ -10,7 +10,7 @@ Currently, the app only handles ingesting word lists and recording batches of wo
 
 ##Prerequisites
 * .NET 4.x Framework
-* the Sox audio processor package
+* the [Sox audio processor package](http://sourceforge.net/projects/sox/?source=typ_redirect)
 * the NAudio package
 
 To report issues or contribute to the code, see http://github.com/abartov/pronuncify.net
