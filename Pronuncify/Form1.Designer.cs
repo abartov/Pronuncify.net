@@ -34,20 +34,23 @@
             this.fontButton = new System.Windows.Forms.Button();
             this.labelWord = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textLang = new System.Windows.Forms.TextBox();
+            this.comboWasapiDevices = new System.Windows.Forms.ComboBox();
+            this.btnNext = new System.Windows.Forms.Button();
+            this.btnStop = new System.Windows.Forms.Button();
+            this.btnStart = new System.Windows.Forms.Button();
             this.textWordFile = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnLoadWords = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.listWords = new System.Windows.Forms.ListBox();
-            this.btnStart = new System.Windows.Forms.Button();
-            this.btnStop = new System.Windows.Forms.Button();
-            this.btnNext = new System.Windows.Forms.Button();
-            this.comboWasapiDevices = new System.Windows.Forms.ComboBox();
-            this.textLang = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.btnOutputFolder = new System.Windows.Forms.Button();
             this.textOutputFolder = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.labelOnAir = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // progressBar1
@@ -88,6 +91,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.panel1);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.textLang);
             this.groupBox1.Controls.Add(this.comboWasapiDevices);
@@ -104,6 +108,66 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Recorder";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(248, 51);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(51, 13);
+            this.label1.TabIndex = 15;
+            this.label1.Text = "language";
+            // 
+            // textLang
+            // 
+            this.textLang.Location = new System.Drawing.Point(305, 48);
+            this.textLang.Name = "textLang";
+            this.textLang.Size = new System.Drawing.Size(32, 20);
+            this.textLang.TabIndex = 14;
+            this.textLang.TextChanged += new System.EventHandler(this.textLang_TextChanged);
+            // 
+            // comboWasapiDevices
+            // 
+            this.comboWasapiDevices.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboWasapiDevices.FormattingEnabled = true;
+            this.comboWasapiDevices.Location = new System.Drawing.Point(251, 21);
+            this.comboWasapiDevices.Name = "comboWasapiDevices";
+            this.comboWasapiDevices.Size = new System.Drawing.Size(121, 21);
+            this.comboWasapiDevices.TabIndex = 13;
+            // 
+            // btnNext
+            // 
+            this.btnNext.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNext.Location = new System.Drawing.Point(378, 77);
+            this.btnNext.Name = "btnNext";
+            this.btnNext.Size = new System.Drawing.Size(75, 23);
+            this.btnNext.TabIndex = 7;
+            this.btnNext.Text = "NEXT";
+            this.btnNext.UseVisualStyleBackColor = true;
+            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
+            // 
+            // btnStop
+            // 
+            this.btnStop.Enabled = false;
+            this.btnStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnStop.Location = new System.Drawing.Point(378, 48);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(75, 23);
+            this.btnStop.TabIndex = 6;
+            this.btnStop.Text = "STOP";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            // 
+            // btnStart
+            // 
+            this.btnStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnStart.Location = new System.Drawing.Point(378, 19);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(75, 23);
+            this.btnStart.TabIndex = 5;
+            this.btnStart.Text = "START";
+            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
+            // 
             // textWordFile
             // 
             this.textWordFile.Location = new System.Drawing.Point(533, 63);
@@ -111,16 +175,16 @@
             this.textWordFile.Size = new System.Drawing.Size(128, 20);
             this.textWordFile.TabIndex = 7;
             // 
-            // button1
+            // btnLoadWords
             // 
-            this.button1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.button1.Location = new System.Drawing.Point(667, 63);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(84, 23);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "Load words...";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnLoadWords.Cursor = System.Windows.Forms.Cursors.Default;
+            this.btnLoadWords.Location = new System.Drawing.Point(667, 63);
+            this.btnLoadWords.Name = "btnLoadWords";
+            this.btnLoadWords.Size = new System.Drawing.Size(84, 23);
+            this.btnLoadWords.TabIndex = 8;
+            this.btnLoadWords.Text = "Load words...";
+            this.btnLoadWords.UseVisualStyleBackColor = true;
+            this.btnLoadWords.Click += new System.EventHandler(this.btnLoadWords_Click);
             // 
             // openFileDialog1
             // 
@@ -133,65 +197,6 @@
             this.listWords.Name = "listWords";
             this.listWords.Size = new System.Drawing.Size(218, 212);
             this.listWords.TabIndex = 9;
-            // 
-            // btnStart
-            // 
-            this.btnStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnStart.Location = new System.Drawing.Point(391, 19);
-            this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(75, 23);
-            this.btnStart.TabIndex = 5;
-            this.btnStart.Text = "START";
-            this.btnStart.UseVisualStyleBackColor = true;
-            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
-            // 
-            // btnStop
-            // 
-            this.btnStop.Enabled = false;
-            this.btnStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnStop.Location = new System.Drawing.Point(391, 48);
-            this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(75, 23);
-            this.btnStop.TabIndex = 6;
-            this.btnStop.Text = "STOP";
-            this.btnStop.UseVisualStyleBackColor = true;
-            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
-            // 
-            // btnNext
-            // 
-            this.btnNext.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNext.Location = new System.Drawing.Point(391, 77);
-            this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(75, 23);
-            this.btnNext.TabIndex = 7;
-            this.btnNext.Text = "NEXT";
-            this.btnNext.UseVisualStyleBackColor = true;
-            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
-            // 
-            // comboWasapiDevices
-            // 
-            this.comboWasapiDevices.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboWasapiDevices.FormattingEnabled = true;
-            this.comboWasapiDevices.Location = new System.Drawing.Point(264, 21);
-            this.comboWasapiDevices.Name = "comboWasapiDevices";
-            this.comboWasapiDevices.Size = new System.Drawing.Size(121, 21);
-            this.comboWasapiDevices.TabIndex = 13;
-            // 
-            // textLang
-            // 
-            this.textLang.Location = new System.Drawing.Point(318, 48);
-            this.textLang.Name = "textLang";
-            this.textLang.Size = new System.Drawing.Size(32, 20);
-            this.textLang.TabIndex = 14;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(261, 51);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(51, 13);
-            this.label1.TabIndex = 15;
-            this.label1.Text = "language";
             // 
             // btnOutputFolder
             // 
@@ -215,6 +220,26 @@
             // 
             this.folderBrowserDialog1.RootFolder = System.Environment.SpecialFolder.MyDocuments;
             // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Red;
+            this.panel1.Controls.Add(this.labelOnAir);
+            this.panel1.Location = new System.Drawing.Point(378, 104);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(99, 100);
+            this.panel1.TabIndex = 16;
+            // 
+            // labelOnAir
+            // 
+            this.labelOnAir.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.labelOnAir.AutoSize = true;
+            this.labelOnAir.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelOnAir.Location = new System.Drawing.Point(14, 37);
+            this.labelOnAir.Name = "labelOnAir";
+            this.labelOnAir.Size = new System.Drawing.Size(61, 24);
+            this.labelOnAir.TabIndex = 0;
+            this.labelOnAir.Text = "off air";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -223,7 +248,7 @@
             this.Controls.Add(this.btnOutputFolder);
             this.Controls.Add(this.textOutputFolder);
             this.Controls.Add(this.listWords);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnLoadWords);
             this.Controls.Add(this.textWordFile);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.textLog);
@@ -231,6 +256,8 @@
             this.Text = "Pronuncify";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -245,7 +272,7 @@
         private System.Windows.Forms.Label labelWord;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox textWordFile;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnLoadWords;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ListBox listWords;
         private System.Windows.Forms.Button btnStop;
@@ -257,6 +284,8 @@
         private System.Windows.Forms.Button btnOutputFolder;
         private System.Windows.Forms.TextBox textOutputFolder;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label labelOnAir;
     }
 }
 

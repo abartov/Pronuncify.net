@@ -27,9 +27,17 @@ namespace Pronuncify
             Font font = new Font(this.labelWord.Font.FontFamily, 50);
             this.labelWord.Font = font; // default
             this.labelWord.Text = "[word here]";
-            this.outputFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            textOutputFolder.Text = this.outputFolder;
-            textLang.Text = "XX";
+            //textLang.Text = Properties.Settings.Default.lang.ToString();
+            string s = Properties.Settings.Default.lang;
+            textLang.Text = s;
+            textOutputFolder.Text = Properties.Settings.Default.outputFolder;
+            textWordFile.Text = Properties.Settings.Default.wordFile;
+            if (textWordFile.Text != "")
+                loadWords(textWordFile.Text);
+            
+            this.outputFolder = textOutputFolder.Text;
+            
+            //this.outputFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             if (Environment.OSVersion.Version.Major >= 6)
             {
                 LoadWasapiDevicesCombo();
@@ -43,31 +51,39 @@ namespace Pronuncify
 
             comboWasapiDevices.DataSource = devices;
             comboWasapiDevices.DisplayMember = "FriendlyName";
-            MessageBox.Show("Can't find any input devices!  Recording won't work...");
-            btnStart.Enabled = false;
-            btnNext.Enabled = false;
+            if (devices.Count == 0)
+            { 
+                MessageBox.Show("Can't find any input devices!  Recording won't work...");
+                btnStart.Enabled = false;
+                btnNext.Enabled = false;
+            }
         }
 
         private void record()
         {
-            // start recording
-            String word = labelWord.Text;
-            Cleanup(); // WaveIn is still unreliable in some circumstances to being reused
+			if (textLang.Text == "") {
+				MessageBox.Show ("Please set the language code (e.g. 'en', 'ar')");
+                listWords.Items.Insert(0, labelWord.Text); // re-insert the dequeued word
+			} else {
+				// start recording
+				String word = labelWord.Text;
+				Cleanup (); // WaveIn is still unreliable in some circumstances to being reused
 
-            if (waveIn == null)
-            {
-                waveIn = CreateWaveInDevice();
-            }
-            // Forcibly turn on the microphone (some programs (Skype) turn it off).
-            var device = (MMDevice)comboWasapiDevices.SelectedItem;
-            device.AudioEndpointVolume.Mute = false;
+				if (waveIn == null) {
+					waveIn = CreateWaveInDevice ();
+				}
+				// Forcibly turn on the microphone (some programs (Skype) turn it off).
+				var device = (MMDevice)comboWasapiDevices.SelectedItem;
+				device.AudioEndpointVolume.Mute = false;
 
-            outputFilename = textLang.Text + "-" + word + ".wav";
-            writer = new WaveFileWriter(Path.Combine(outputFolder, outputFilename), waveIn.WaveFormat);
-            textLog.AppendText("Recording...");
-            waveIn.StartRecording();
-            SetControlStates(true);
-
+				outputFilename = textLang.Text + "-" + word + ".wav";
+				writer = new WaveFileWriter (Path.Combine (outputFolder, outputFilename), waveIn.WaveFormat);
+				waveIn.StartRecording ();
+                textLog.AppendText("Recording...");
+                panel1.BackColor = Color.Green;
+                labelOnAir.Text = "ON AIR";
+				SetControlStates (true);
+			}
         }
         private void fontButton_Click(object sender, EventArgs e)
         {
@@ -84,26 +100,32 @@ namespace Pronuncify
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void loadWords(string file)
+        {
+            try
+            {
+                string[] lines = File.ReadAllLines(file);
+                foreach (string line in lines)
+                {
+                    listWords.Items.Add(line);
+                }
+                    
+                Console.WriteLine(lines.Count());
+            }
+            catch (IOException)
+            {
+            }
+        }
+        private void btnLoadWords_Click(object sender, EventArgs e)
         {
             DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
             if (result == DialogResult.OK) // Test result.
             {
                 String file = openFileDialog1.FileName;
+                Properties.Settings.Default.wordFile = file;
+                Properties.Settings.Default.Save();
                 textWordFile.Text = file;
-                try
-                {
-                    string[] lines = File.ReadAllLines(file);
-                    foreach (string line in lines)
-                    {
-                        listWords.Items.Add(line);
-                    }
-                    
-                    Console.WriteLine(lines.Count());
-                }
-                catch (IOException)
-                {
-                }
+                loadWords(file);
             }
         }
 
@@ -216,6 +238,8 @@ namespace Pronuncify
         void StopRecording()
         {
             Debug.WriteLine("StopRecording");
+            panel1.BackColor = Color.Red;
+            labelOnAir.Text = "off air";
             if (waveIn != null) waveIn.StopRecording();
         }
 
@@ -243,8 +267,16 @@ namespace Pronuncify
             if (result == DialogResult.OK)
             {
                 this.outputFolder = folderBrowserDialog1.SelectedPath;
+                Properties.Settings.Default.outputFolder = this.outputFolder;
+                Properties.Settings.Default.Save();
                 textOutputFolder.Text = this.outputFolder;
             }
+        }
+
+        private void textLang_TextChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.lang = textLang.Text;
+            Properties.Settings.Default.Save();
         }
 
     }
