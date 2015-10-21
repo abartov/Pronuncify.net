@@ -63,7 +63,13 @@ namespace Pronuncify
 			if (textLang.Text == "") {
 				MessageBox.Show ("Please set the language code (e.g. 'en', 'ar')");
                 listWords.Items.Insert(0, labelWord.Text); // re-insert the dequeued word
-			} else {
+            }
+            else if (textSox.Text == "")
+            {
+                MessageBox.Show("Please install the Sox package -- http://sourceforge.net/projects/sox/?source=typ_redirect -- and navigate to it using the sox.exe button");
+                listWords.Items.Insert(0, labelWord.Text); // re-insert the dequeued word
+            }
+            else {
 				// start recording
 				String word = labelWord.Text;
 				Cleanup (); // WaveIn is still unreliable in some circumstances to being reused
@@ -75,8 +81,9 @@ namespace Pronuncify
 				var device = (MMDevice)comboWasapiDevices.SelectedItem;
 				device.AudioEndpointVolume.Mute = false;
 
-				outputFilename = textLang.Text + "-" + word + ".wav";
-				writer = new WaveFileWriter (Path.Combine (outputFolder, outputFilename), waveIn.WaveFormat);
+                outputFilename = textLang.Text + "-" + cleanFileName(word);
+                
+				writer = new WaveFileWriter (Path.Combine (outputFolder, outputFilename + ".wav"), waveIn.WaveFormat);
 				waveIn.StartRecording ();
                 textLog.AppendText("Recording...");
                 panel1.BackColor = Color.Green;
@@ -181,7 +188,9 @@ namespace Pronuncify
             else
             {
                 FinalizeWaveFile();
-                textLog.AppendText("done.  Saved to: " + this.outputFilename+"\n");
+                textLog.AppendText("recorded, now converting to Ogg Vorbis... ");
+                oggify();
+                textLog.AppendText("done.  Saved to: " + this.outputFilename+".ogg\n");
                 progressBar1.Value = 0;
                 if (e.Exception != null)
                 {
@@ -191,7 +200,16 @@ namespace Pronuncify
                 SetControlStates(false);
             }
         }
+        private static string cleanFileName(string filename)
+        {            
+            string file = filename;
 
+            foreach (char c in System.IO.Path.GetInvalidFileNameChars())
+            {
+                file = file.Replace(c, '_');
+            }                                 
+            return file;
+        }   
         private void Cleanup()
         {
             if (waveIn != null)
@@ -271,7 +289,13 @@ namespace Pronuncify
                 textOutputFolder.Text = this.outputFolder;
             }
         }
-
+        private void oggify()
+        {
+            string fullpath = Path.Combine(outputFolder, outputFilename);
+            Process proc = Process.Start(textSox.Text, fullpath + ".wav " + fullpath + ".ogg norm vad -p .25 reverse vad -p .25 reverse");
+            proc.WaitForExit();
+            File.Delete(fullpath + ".wav");
+        }
         private void textLang_TextChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.lang = textLang.Text;
@@ -281,6 +305,19 @@ namespace Pronuncify
         private void linkHomepage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("https://github.com/abartov/pronuncify.net");
+        }
+
+        private void btnFindSox_Click(object sender, EventArgs e)
+        {
+            DialogResult result = openFileDialog2.ShowDialog(); // Show the dialog.
+            if (result == DialogResult.OK) // Test result.
+            {
+                String file = openFileDialog2.FileName;
+                Properties.Settings.Default.sox = file;
+                Properties.Settings.Default.Save();
+                textSox.Text = file;
+            }
+
         }
 
     }

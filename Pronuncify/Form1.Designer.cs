@@ -54,9 +54,12 @@
             this.btnFindSox = new System.Windows.Forms.Button();
             this.textSox = new System.Windows.Forms.TextBox();
             this.linkHomepage = new System.Windows.Forms.LinkLabel();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // progressBar1
@@ -165,7 +168,7 @@
             this.btnNext.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNext.Location = new System.Drawing.Point(378, 77);
             this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(75, 23);
+            this.btnNext.Size = new System.Drawing.Size(99, 23);
             this.btnNext.TabIndex = 7;
             this.btnNext.Text = "NEXT";
             this.btnNext.UseVisualStyleBackColor = true;
@@ -177,7 +180,7 @@
             this.btnStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnStop.Location = new System.Drawing.Point(378, 48);
             this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(75, 23);
+            this.btnStop.Size = new System.Drawing.Size(99, 23);
             this.btnStop.TabIndex = 6;
             this.btnStop.Text = "STOP";
             this.btnStop.UseVisualStyleBackColor = true;
@@ -188,7 +191,7 @@
             this.btnStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnStart.Location = new System.Drawing.Point(378, 19);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(75, 23);
+            this.btnStart.Size = new System.Drawing.Size(99, 23);
             this.btnStart.TabIndex = 5;
             this.btnStart.Text = "START";
             this.btnStart.UseVisualStyleBackColor = true;
@@ -227,7 +230,7 @@
             // btnOutputFolder
             // 
             this.btnOutputFolder.Cursor = System.Windows.Forms.Cursors.Default;
-            this.btnOutputFolder.Location = new System.Drawing.Point(667, 31);
+            this.btnOutputFolder.Location = new System.Drawing.Point(149, 26);
             this.btnOutputFolder.Name = "btnOutputFolder";
             this.btnOutputFolder.Size = new System.Drawing.Size(84, 23);
             this.btnOutputFolder.TabIndex = 11;
@@ -237,9 +240,9 @@
             // 
             // textOutputFolder
             // 
-            this.textOutputFolder.Location = new System.Drawing.Point(511, 31);
+            this.textOutputFolder.Location = new System.Drawing.Point(6, 26);
             this.textOutputFolder.Name = "textOutputFolder";
-            this.textOutputFolder.Size = new System.Drawing.Size(150, 20);
+            this.textOutputFolder.Size = new System.Drawing.Size(138, 20);
             this.textOutputFolder.TabIndex = 10;
             // 
             // folderBrowserDialog1
@@ -257,7 +260,7 @@
             this.groupBox2.Size = new System.Drawing.Size(240, 280);
             this.groupBox2.TabIndex = 12;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "groupBox2";
+            this.groupBox2.Text = "Word list";
             // 
             // btnSaveWords
             // 
@@ -271,18 +274,19 @@
             // btnFindSox
             // 
             this.btnFindSox.Cursor = System.Windows.Forms.Cursors.Default;
-            this.btnFindSox.Location = new System.Drawing.Point(667, 63);
+            this.btnFindSox.Location = new System.Drawing.Point(149, 58);
             this.btnFindSox.Name = "btnFindSox";
             this.btnFindSox.Size = new System.Drawing.Size(84, 23);
             this.btnFindSox.TabIndex = 14;
             this.btnFindSox.Text = "sox.exe";
             this.btnFindSox.UseVisualStyleBackColor = true;
+            this.btnFindSox.Click += new System.EventHandler(this.btnFindSox_Click);
             // 
             // textSox
             // 
-            this.textSox.Location = new System.Drawing.Point(511, 63);
+            this.textSox.Location = new System.Drawing.Point(6, 58);
             this.textSox.Name = "textSox";
-            this.textSox.Size = new System.Drawing.Size(150, 20);
+            this.textSox.Size = new System.Drawing.Size(138, 20);
             this.textSox.TabIndex = 13;
             // 
             // linkHomepage
@@ -296,17 +300,32 @@
             this.linkHomepage.Text = "Pronuncify.net homepage";
             this.linkHomepage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkHomepage_LinkClicked);
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.textOutputFolder);
+            this.groupBox3.Controls.Add(this.btnOutputFolder);
+            this.groupBox3.Controls.Add(this.btnFindSox);
+            this.groupBox3.Controls.Add(this.textSox);
+            this.groupBox3.Location = new System.Drawing.Point(511, 12);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(240, 100);
+            this.groupBox3.TabIndex = 16;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Paths";
+            // 
+            // openFileDialog2
+            // 
+            this.openFileDialog2.FileName = "sox.exe";
+            this.openFileDialog2.Filter = "Sox binary|sox.exe";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(754, 421);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.linkHomepage);
-            this.Controls.Add(this.btnFindSox);
-            this.Controls.Add(this.textSox);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.btnOutputFolder);
-            this.Controls.Add(this.textOutputFolder);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.textLog);
             this.Name = "Form1";
@@ -317,6 +336,8 @@
             this.panel1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -350,6 +371,8 @@
         private System.Windows.Forms.Button btnFindSox;
         private System.Windows.Forms.TextBox textSox;
         private System.Windows.Forms.LinkLabel linkHomepage;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.OpenFileDialog openFileDialog2;
     }
 }
 
