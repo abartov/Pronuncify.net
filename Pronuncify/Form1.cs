@@ -27,7 +27,7 @@ namespace Pronuncify
         public Form1()
         {
             InitializeComponent();
-            Font font = new Font(this.labelWord.Font.FontFamily, 50);
+            Font font = new Font(this.labelWord.Font.FontFamily, 32);
             this.labelWord.Font = font; // default
             this.labelWord.Text = "[word here]";
             textLang.Text = Properties.Settings.Default.lang;
@@ -115,7 +115,26 @@ namespace Pronuncify
                 this.labelWord.Font = font;
             }
         }
-
+        private void saveWords(string file)
+        {
+            textLog.AppendText("Saving wordfile to " + file + "... ");
+            try
+            {
+                FileStream f = File.OpenWrite(file);
+                foreach (string line in listWords.Items)
+                {
+                    string with_newline = line + "\r\n";
+                    byte[] bytes = System.Text.UnicodeEncoding.Default.GetBytes(with_newline.ToCharArray()); // srsly?!
+                    f.Write(bytes, 0, bytes.Length); 
+                }
+                f.Close();
+            }
+            catch (IOException)
+            {
+                textLog.AppendText("error!\n");
+            }
+            textLog.AppendText("done.\n");
+        }
         private void loadWords(string file)
         {
             try
@@ -168,6 +187,8 @@ namespace Pronuncify
             else
             {
                 MessageBox.Show("No more words.  Load some more on the right.");
+                batchMode = false;
+                SetControlStates(false);
             }
         }
         private void btnNext_Click(object sender, EventArgs e)
@@ -320,6 +341,7 @@ namespace Pronuncify
             {
                 batchMode = false;
                 labelOnAir.Text = "off air";
+                SetControlStates(false);
             }
         }
         private void textLang_TextChanged(object sender, EventArgs e)
@@ -346,5 +368,17 @@ namespace Pronuncify
 
         }
 
+        private void btnSaveWords_Click(object sender, EventArgs e)
+        {
+            DialogResult result = saveFileDialog1.ShowDialog(); // Show the dialog.
+            if (result == DialogResult.OK) // Test result.
+            {
+                String file = saveFileDialog1.FileName;
+                Properties.Settings.Default.wordFile = file;
+                Properties.Settings.Default.Save();
+                textWordFile.Text = file;
+                saveWords(file);
+            }
+        }
     }
 }

@@ -56,6 +56,7 @@
             this.linkHomepage = new System.Windows.Forms.LinkLabel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -73,10 +74,10 @@
             // 
             // textLog
             // 
-            this.textLog.Location = new System.Drawing.Point(22, 231);
+            this.textLog.Location = new System.Drawing.Point(22, 282);
             this.textLog.Multiline = true;
             this.textLog.Name = "textLog";
-            this.textLog.Size = new System.Drawing.Size(483, 182);
+            this.textLog.Size = new System.Drawing.Size(483, 131);
             this.textLog.TabIndex = 2;
             // 
             // fontButton
@@ -93,6 +94,7 @@
             // 
             this.labelWord.AutoSize = true;
             this.labelWord.Location = new System.Drawing.Point(22, 83);
+            this.labelWord.MaximumSize = new System.Drawing.Size(400, 0);
             this.labelWord.Name = "labelWord";
             this.labelWord.Size = new System.Drawing.Size(48, 13);
             this.labelWord.TabIndex = 4;
@@ -112,7 +114,7 @@
             this.groupBox1.Controls.Add(this.fontButton);
             this.groupBox1.Location = new System.Drawing.Point(22, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(483, 204);
+            this.groupBox1.Size = new System.Drawing.Size(483, 264);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Recorder";
@@ -270,6 +272,7 @@
             this.btnSaveWords.TabIndex = 10;
             this.btnSaveWords.Text = "Save words...";
             this.btnSaveWords.UseVisualStyleBackColor = true;
+            this.btnSaveWords.Click += new System.EventHandler(this.btnSaveWords_Click);
             // 
             // btnFindSox
             // 
@@ -317,6 +320,10 @@
             // 
             this.openFileDialog2.FileName = "sox.exe";
             this.openFileDialog2.Filter = "Sox binary|sox.exe";
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.DefaultExt = "txt";
             // 
             // Form1
             // 
@@ -373,6 +380,7 @@
         private System.Windows.Forms.LinkLabel linkHomepage;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.OpenFileDialog openFileDialog2;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
 
