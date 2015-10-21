@@ -16,10 +16,13 @@ namespace Pronuncify
 {
     public partial class Form1 : Form
     {
+        static System.Windows.Forms.Timer myTimer = new System.Windows.Forms.Timer();
+
         private IWaveIn waveIn;
         private WaveFileWriter writer;
         String outputFilename;
         String outputFolder;
+        bool batchMode = false;
 
         public Form1()
         {
@@ -35,12 +38,19 @@ namespace Pronuncify
                 loadWords(textWordFile.Text);
             
             this.outputFolder = textOutputFolder.Text;
-            
             //this.outputFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             if (Environment.OSVersion.Version.Major >= 6)
             {
                 LoadWasapiDevicesCombo();
             }
+            myTimer.Tick += new EventHandler(timer_Tick);
+            myTimer.Interval = (1000) * 4; // 4 seconds
+        }
+        void timer_Tick(object sender, EventArgs e)
+        {
+            myTimer.Stop();
+            myTimer.Enabled = false;
+            nextword();
         }
 
         private void LoadWasapiDevicesCombo()
@@ -137,16 +147,17 @@ namespace Pronuncify
 
         private void btnStart_Click(object sender, EventArgs e)
         {
+            batchMode = true;
             SetControlStates(true);
+            nextword();
         }
 
         private void btnStop_Click(object sender, EventArgs e)
         {
             SetControlStates(false);
+            batchMode = false;
         }
-
-        private void btnNext_Click(object sender, EventArgs e)
-        {
+        public void nextword() {
             if (listWords.Items.Count > 0)
             {
                 String word = listWords.Items[0].ToString();
@@ -158,6 +169,10 @@ namespace Pronuncify
             {
                 MessageBox.Show("No more words.  Load some more on the right.");
             }
+        }
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            nextword();
         }
         void OnRecordingPanelDisposed(object sender, EventArgs e)
         {
@@ -254,10 +269,12 @@ namespace Pronuncify
 
         void StopRecording()
         {
-            Debug.WriteLine("StopRecording");
-            panel1.BackColor = Color.Red;
-            labelOnAir.Text = "off air";
             if (waveIn != null) waveIn.StopRecording();
+            panel1.BackColor = Color.Red;
+            if (batchMode)
+                labelOnAir.Text = "ready?";
+            else
+                labelOnAir.Text = "off air";
         }
 
         private void OnButtonStopRecordingClick(object sender, EventArgs e)
@@ -267,9 +284,9 @@ namespace Pronuncify
 
         private void SetControlStates(bool isRecording)
         {
-            btnStart.Enabled = !isRecording;
-            btnNext.Enabled = !isRecording;
-            btnStop.Enabled = isRecording;
+            btnStart.Enabled = !isRecording && !batchMode;
+            btnNext.Enabled = !isRecording && !batchMode; 
+            btnStop.Enabled = isRecording && batchMode;
         }
 
         private void OnOpenFolderClick(object sender, EventArgs e)
@@ -292,9 +309,18 @@ namespace Pronuncify
         private void oggify()
         {
             string fullpath = Path.Combine(outputFolder, outputFilename);
-            Process proc = Process.Start(textSox.Text, fullpath + ".wav " + fullpath + ".ogg norm vad -p .25 reverse vad -p .25 reverse");
+            Process proc = Process.Start(textSox.Text, "\"" + fullpath + ".wav \" \"" + fullpath + ".ogg\" norm vad -p .25 reverse vad -p .25 reverse");
             proc.WaitForExit();
             File.Delete(fullpath + ".wav");
+            if (batchMode && listWords.Items.Count > 0)
+            {
+                myTimer.Enabled = true;
+                myTimer.Start();
+            } else
+            {
+                batchMode = false;
+                labelOnAir.Text = "off air";
+            }
         }
         private void textLang_TextChanged(object sender, EventArgs e)
         {
