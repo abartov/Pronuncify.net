@@ -8,6 +8,9 @@ The word list is loaded from a plaintext file.  The user can save the remaining 
 
 Currently, the app only handles ingesting word lists and recording batches of word pronunciations.  The resultant Ogg files are just deposited in a specified directory, and it is up to the user to upload them to Commons appropriately (and to keep track of what's been uploaded already; ideally move it away from the output directory once uploaded).  In the future, I may implement OAuth-based authentication so that the app would also be able to upload the files on your behalf.
 
+##Download
+The current release is v0.0.2 and is available [here](https://github.com/abartov/Pronuncify.net/releases/tag/v0.0.2).
+
 ##Prerequisites
 * .NET 4.x Framework
 * the [Sox audio processor package](http://sourceforge.net/projects/sox/?source=typ_redirect)
