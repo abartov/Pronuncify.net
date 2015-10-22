@@ -21,6 +21,7 @@ namespace Pronuncify
         private IWaveIn waveIn;
         private WaveFileWriter writer;
         String outputFilename;
+        int anti_dupe_count = 0;
         String outputFolder;
         bool batchMode = false;
 
@@ -30,10 +31,10 @@ namespace Pronuncify
             Font font = new Font(this.labelWord.Font.FontFamily, 32);
             this.labelWord.Font = font; // default
             this.labelWord.Text = "[word here]";
-            textLang.Text = Properties.Settings.Default.lang;
-            textSox.Text = Properties.Settings.Default.sox;
-            textOutputFolder.Text = Properties.Settings.Default.outputFolder;
-            textWordFile.Text = Properties.Settings.Default.wordFile;
+            textLang.Text = Pronuncify.Properties.Settings.Default.lang;
+            textSox.Text = Pronuncify.Properties.Settings.Default.sox;
+            textOutputFolder.Text = Pronuncify.Properties.Settings.Default.outputFolder;
+            textWordFile.Text = Pronuncify.Properties.Settings.Default.wordFile;
             if (textWordFile.Text != "")
                 loadWords(textWordFile.Text);
             
@@ -73,11 +74,15 @@ namespace Pronuncify
 			if (textLang.Text == "") {
 				MessageBox.Show ("Please set the language code (e.g. 'en', 'ar')");
                 listWords.Items.Insert(0, labelWord.Text); // re-insert the dequeued word
+                batchMode = false;
+                SetControlStates(false);
             }
             else if (textSox.Text == "")
             {
                 MessageBox.Show("Please install the Sox package -- http://sourceforge.net/projects/sox/?source=typ_redirect -- and navigate to it using the sox.exe button");
                 listWords.Items.Insert(0, labelWord.Text); // re-insert the dequeued word
+                batchMode = false;
+                SetControlStates(false);
             }
             else {
 				// start recording
@@ -92,7 +97,16 @@ namespace Pronuncify
 				device.AudioEndpointVolume.Mute = false;
 
                 outputFilename = textLang.Text + "-" + cleanFileName(word);
-                
+                // avoid overwriting existing files
+                string fname = Path.Combine(outputFolder, outputFilename);
+                while(File.Exists(fname + ".wav") || File.Exists(fname + ".ogg"))
+                {
+                    textLog.AppendText("--> " + fname + " already exists.  Looking for alternative name.\n");
+                    anti_dupe_count++;
+                    fname = Path.Combine(outputFolder, outputFilename + anti_dupe_count.ToString());
+                };
+                outputFilename = fname;
+                anti_dupe_count = 0;
 				writer = new WaveFileWriter (Path.Combine (outputFolder, outputFilename + ".wav"), waveIn.WaveFormat);
 				waveIn.StartRecording ();
                 textLog.AppendText("Recording...");
@@ -110,8 +124,6 @@ namespace Pronuncify
             {
                 // Get Font.
                 Font font = fontDialog1.Font;
-                // Set TextBox properties.
-                //this.textWord.Text = string.Format("Font is­: {0}", font.Name);
                 this.labelWord.Font = font;
             }
         }
@@ -157,8 +169,8 @@ namespace Pronuncify
             if (result == DialogResult.OK) // Test result.
             {
                 String file = openFileDialog1.FileName;
-                Properties.Settings.Default.wordFile = file;
-                Properties.Settings.Default.Save();
+                Pronuncify.Properties.Settings.Default.wordFile = file;
+                Pronuncify.Properties.Settings.Default.Save();
                 textWordFile.Text = file;
                 loadWords(file);
             }
@@ -322,8 +334,8 @@ namespace Pronuncify
             if (result == DialogResult.OK)
             {
                 this.outputFolder = folderBrowserDialog1.SelectedPath;
-                Properties.Settings.Default.outputFolder = this.outputFolder;
-                Properties.Settings.Default.Save();
+                Pronuncify.Properties.Settings.Default.outputFolder = this.outputFolder;
+                Pronuncify.Properties.Settings.Default.Save();
                 textOutputFolder.Text = this.outputFolder;
             }
         }
@@ -346,8 +358,8 @@ namespace Pronuncify
         }
         private void textLang_TextChanged(object sender, EventArgs e)
         {
-            Properties.Settings.Default.lang = textLang.Text;
-            Properties.Settings.Default.Save();
+            Pronuncify.Properties.Settings.Default.lang = textLang.Text;
+            Pronuncify.Properties.Settings.Default.Save();
         }
 
         private void linkHomepage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -361,8 +373,8 @@ namespace Pronuncify
             if (result == DialogResult.OK) // Test result.
             {
                 String file = openFileDialog2.FileName;
-                Properties.Settings.Default.sox = file;
-                Properties.Settings.Default.Save();
+                Pronuncify.Properties.Settings.Default.sox = file;
+                Pronuncify.Properties.Settings.Default.Save();
                 textSox.Text = file;
             }
 
@@ -374,11 +386,27 @@ namespace Pronuncify
             if (result == DialogResult.OK) // Test result.
             {
                 String file = saveFileDialog1.FileName;
-                Properties.Settings.Default.wordFile = file;
-                Properties.Settings.Default.Save();
+                Pronuncify.Properties.Settings.Default.wordFile = file;
+                Pronuncify.Properties.Settings.Default.Save();
                 textWordFile.Text = file;
                 saveWords(file);
             }
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Are you sure you want to EMPTY the word list and lose track of progress?", "Please confirm", MessageBoxButtons.YesNo,
+                                 MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                listWords.Items.Clear();
+            }
+        }
+
+        private void btnAbout_Click(object sender, EventArgs e)
+        {
+           AboutBox1 ab = new AboutBox1();
+           ab.Show();
         }
     }
 }

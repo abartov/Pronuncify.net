@@ -57,6 +57,8 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.btnClear = new System.Windows.Forms.Button();
+            this.btnAbout = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -77,6 +79,7 @@
             this.textLog.Location = new System.Drawing.Point(22, 282);
             this.textLog.Multiline = true;
             this.textLog.Name = "textLog";
+            this.textLog.ReadOnly = true;
             this.textLog.Size = new System.Drawing.Size(483, 131);
             this.textLog.TabIndex = 2;
             // 
@@ -226,7 +229,7 @@
             this.listWords.FormattingEnabled = true;
             this.listWords.Location = new System.Drawing.Point(15, 74);
             this.listWords.Name = "listWords";
-            this.listWords.Size = new System.Drawing.Size(218, 186);
+            this.listWords.Size = new System.Drawing.Size(218, 173);
             this.listWords.TabIndex = 9;
             // 
             // btnOutputFolder
@@ -253,6 +256,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btnClear);
             this.groupBox2.Controls.Add(this.btnSaveWords);
             this.groupBox2.Controls.Add(this.textWordFile);
             this.groupBox2.Controls.Add(this.btnLoadWords);
@@ -295,7 +299,7 @@
             // linkHomepage
             // 
             this.linkHomepage.AutoSize = true;
-            this.linkHomepage.Location = new System.Drawing.Point(571, 400);
+            this.linkHomepage.Location = new System.Drawing.Point(523, 400);
             this.linkHomepage.Name = "linkHomepage";
             this.linkHomepage.Size = new System.Drawing.Size(128, 13);
             this.linkHomepage.TabIndex = 15;
@@ -325,18 +329,39 @@
             // 
             this.saveFileDialog1.DefaultExt = "txt";
             // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(15, 254);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(216, 23);
+            this.btnClear.TabIndex = 11;
+            this.btnClear.Text = "Clear the word list";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
+            // btnAbout
+            // 
+            this.btnAbout.Location = new System.Drawing.Point(665, 396);
+            this.btnAbout.Name = "btnAbout";
+            this.btnAbout.Size = new System.Drawing.Size(86, 21);
+            this.btnAbout.TabIndex = 17;
+            this.btnAbout.Text = "Help / About...";
+            this.btnAbout.UseVisualStyleBackColor = true;
+            this.btnAbout.Click += new System.EventHandler(this.btnAbout_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(754, 421);
+            this.Controls.Add(this.btnAbout);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.linkHomepage);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.textLog);
             this.Name = "Form1";
-            this.Text = "Pronuncify";
+            this.Text = "Pronuncify v0.0.2";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -381,6 +406,8 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.OpenFileDialog openFileDialog2;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.Button btnAbout;
     }
 }
 
