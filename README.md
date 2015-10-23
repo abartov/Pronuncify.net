@@ -20,6 +20,6 @@ To report issues or contribute to the code, see http://github.com/abartov/pronun
 
 ## See also
 * [pronuncify](https://github.com/abartov/pronuncify), a command-line version of this tool for Linux (and possibly OS X).
-* 
+
 ## License
 The code is in the public domain.  See the LICENSE file for details.
