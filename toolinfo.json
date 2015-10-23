@@ -1,0 +1,9 @@
+{
+    "name" : "pronuncify.net",
+    "title" : "Pronuncify.net (Windows Vista, 7, 8)",
+    "description" : "automate incrementally producing word pronunciation recordings for Wiktionary through Wikimedia Commons",
+    "url" : "https://github.com/abartov/pronuncify.net",
+    "keywords" : "audio, pronunciation, batch, commons, ogg",
+    "author" : "Asaf Bartov",
+    "repository" : "https://github.com/abartov/pronuncify.net.git"
+}
