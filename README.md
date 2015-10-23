@@ -18,5 +18,8 @@ The current release is v0.0.2 and is available [here](https://github.com/abartov
 
 To report issues or contribute to the code, see http://github.com/abartov/pronuncify.net
 
+## See also
+* [pronuncify](https://github.com/abartov/pronuncify), a command-line version of this tool for Linux (and possibly OS X).
+* 
 ## License
 The code is in the public domain.  See the LICENSE file for details.
