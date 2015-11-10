@@ -12,7 +12,7 @@ Currently, the app only handles ingesting word lists and recording batches of wo
 The current release is v0.0.2 and is available [here](https://github.com/abartov/Pronuncify.net/releases/tag/v0.0.2).
 
 ##Prerequisites
-* Microsoft Windows Visa, 7, or 8.  Windows 10 is not yet supported.
+* Microsoft Windows Vista, 7, or 8.  Windows 10 is not yet supported.
 * .NET 4.x Framework
 * the [Sox audio processor package](http://sourceforge.net/projects/sox/?source=typ_redirect)
 
