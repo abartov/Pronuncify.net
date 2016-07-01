@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 using NAudio.CoreAudioApi;
 using NAudio.Wave;
-using System.Diagnostics;
 
 namespace Pronuncify
 {
@@ -342,9 +337,15 @@ namespace Pronuncify
         private void oggify()
         {
             string fullpath = Path.Combine(outputFolder, outputFilename);
-            Process proc = Process.Start(textSox.Text, "\"" + fullpath + ".wav \" \"" + fullpath + ".ogg\" norm vad -p .25 reverse vad -p .25 reverse");
+            // start workaround
+            // (Sox can't deal with Unicode filenames... see https://sourceforge.net/p/sox/bugs/271/ )
+            string tmpname = Path.GetTempFileName();
+            File.Move(fullpath + ".wav", tmpname + ".wav");
+            Process proc = Process.Start(textSox.Text, "\"" + tmpname + ".wav \" \"" + tmpname + ".ogg\" norm vad -p .25 reverse vad -p .25 reverse");
             proc.WaitForExit();
-            File.Delete(fullpath + ".wav");
+            File.Delete(tmpname + ".wav");
+            File.Move(tmpname + ".ogg", fullpath + ".ogg");
+            // end workwaround
             if (batchMode && listWords.Items.Count > 0)
             {
                 myTimer.Enabled = true;

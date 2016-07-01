@@ -50,6 +50,7 @@
             this.textOutputFolder = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnClear = new System.Windows.Forms.Button();
             this.btnSaveWords = new System.Windows.Forms.Button();
             this.btnFindSox = new System.Windows.Forms.Button();
             this.textSox = new System.Windows.Forms.TextBox();
@@ -57,7 +58,6 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.btnClear = new System.Windows.Forms.Button();
             this.btnAbout = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -268,6 +268,16 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Word list";
             // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(15, 254);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(216, 23);
+            this.btnClear.TabIndex = 11;
+            this.btnClear.Text = "Clear the word list";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
             // btnSaveWords
             // 
             this.btnSaveWords.Location = new System.Drawing.Point(125, 20);
@@ -329,16 +339,6 @@
             // 
             this.saveFileDialog1.DefaultExt = "txt";
             // 
-            // btnClear
-            // 
-            this.btnClear.Location = new System.Drawing.Point(15, 254);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(216, 23);
-            this.btnClear.TabIndex = 11;
-            this.btnClear.Text = "Clear the word list";
-            this.btnClear.UseVisualStyleBackColor = true;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
-            // 
             // btnAbout
             // 
             this.btnAbout.Location = new System.Drawing.Point(665, 396);
@@ -361,7 +361,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.textLog);
             this.Name = "Form1";
-            this.Text = "Pronuncify v0.0.2";
+            this.Text = "Pronuncify v0.0.3";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.panel1.ResumeLayout(false);
